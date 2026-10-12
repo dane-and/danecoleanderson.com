@@ -9,28 +9,510 @@
   # Environment variables
   environment = { NETLIFY_USE_YARN = "false", NODE_VERSION = "18.17.0", NPM_FLAGS = "--legacy-peer-deps" }
 
-# Preserve old links while moving visitors to the primary domain.
-[[redirects]]
-  from = "https://humanitieslastchance.org/*"
-  to = "https://www.danecoleanderson.com/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.humanitieslastchance.org/*"
-  to = "https://www.danecoleanderson.com/:splat"
-  status = 301
-  force = true
+# ---------------------------------------------------------------------------
+# Old Humanities Last Chance domains (aliases on this Netlify project).
+# Netlify uses the first matching rule, so the order is: plain HTTP to HTTPS
+# on the same host, then specific old pages to their new equivalents, then a
+# catch-all to the new homepage. All are permanent (301).
+# ---------------------------------------------------------------------------
 
 [[redirects]]
   from = "http://humanitieslastchance.org/*"
-  to = "https://www.danecoleanderson.com/:splat"
+  to = "https://humanitieslastchance.org/:splat"
   status = 301
   force = true
 
 [[redirects]]
   from = "http://www.humanitieslastchance.org/*"
-  to = "https://www.danecoleanderson.com/:splat"
+  to = "https://www.humanitieslastchance.org/:splat"
+  status = 301
+  force = true
+
+# humanitieslastchance.org: pages with a clear equivalent
+[[redirects]]
+  from = "https://humanitieslastchance.org/about"
+  to = "https://www.danecoleanderson.com/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/contact"
+  to = "https://www.danecoleanderson.com/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/resources"
+  to = "https://www.danecoleanderson.com/courses"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/articles/blog"
+  to = "https://www.danecoleanderson.com/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/articles/interviews"
+  to = "https://www.danecoleanderson.com/interviews"
+  status = 301
+  force = true
+
+# humanitieslastchance.org: interviews (same slugs on the new site)
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/jonathan-sheehan-on-sacrifice-and-the-secular"
+  to = "https://www.danecoleanderson.com/article/jonathan-sheehan-on-sacrifice-and-the-secular"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/walter-benn-michaels-on-ai-against-theory-and-the-trouble-with-viewpoint-diversity"
+  to = "https://www.danecoleanderson.com/article/walter-benn-michaels-on-ai-against-theory-and-the-trouble-with-viewpoint-diversity"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/kathleen-fitzpatrick-on-the-digital-humanities-ai-and-thinking-generously"
+  to = "https://www.danecoleanderson.com/article/kathleen-fitzpatrick-on-the-digital-humanities-ai-and-thinking-generously"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/hollis-robbins-on-ai-and-thinking-across-boundaries"
+  to = "https://www.danecoleanderson.com/article/hollis-robbins-on-ai-and-thinking-across-boundaries"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/li-ou-on-skepticism-negative-capability-and-romanticism-in-china"
+  to = "https://www.danecoleanderson.com/article/li-ou-on-skepticism-negative-capability-and-romanticism-in-china"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/stanley-fish-on-interpretive-communities-viewpoint-diversity-and-frank-sinatra"
+  to = "https://www.danecoleanderson.com/article/stanley-fish-on-interpretive-communities-viewpoint-diversity-and-frank-sinatra"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/paul-fry-on-wordsworth-william-empson-and-literary-theory"
+  to = "https://www.danecoleanderson.com/article/paul-fry-on-wordsworth-william-empson-and-literary-theory"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/scott-newstok-on-thinking-like-shakespeare-close-reading-and-montaigne"
+  to = "https://www.danecoleanderson.com/article/scott-newstok-on-thinking-like-shakespeare-close-reading-and-montaigne"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/michael-clune-on-aesthetic-judgment-ai-and-the-future-of-the-english-departments"
+  to = "https://www.danecoleanderson.com/article/michael-clune-on-aesthetic-judgment-ai-and-the-future-of-the-english-departments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/david-sorensen-on-gentlemanliness-carlyle-and-hero-worship"
+  to = "https://www.danecoleanderson.com/article/david-sorensen-on-gentlemanliness-carlyle-and-hero-worship"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/john-turner-on-joseph-smith-charisma-and-the-history-of-early-mormonism"
+  to = "https://www.danecoleanderson.com/article/john-turner-on-joseph-smith-charisma-and-the-history-of-early-mormonism"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/10-things-i-hate-about-you-and-shakespeare-adaptation-with-natalie-loper"
+  to = "https://www.danecoleanderson.com/article/10-things-i-hate-about-you-and-shakespeare-adaptation-with-natalie-loper"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/mark-edmundson-on-emerson-trump-freud-and-the-super-ego"
+  to = "https://www.danecoleanderson.com/article/mark-edmundson-on-emerson-trump-freud-and-the-super-ego"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/gayle-greene-on-shakespeare-and-the-state-of-the-humanities"
+  to = "https://www.danecoleanderson.com/article/gayle-greene-on-shakespeare-and-the-state-of-the-humanities"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/critical-ai-and-victorian-literature-with-lauren-goodlad"
+  to = "https://www.danecoleanderson.com/article/critical-ai-and-victorian-literature-with-lauren-goodlad"
+  status = 301
+  force = true
+
+# humanitieslastchance.org: posts selected for the new blog
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/google-scholar-labs-is-out"
+  to = "https://www.danecoleanderson.com/blog/google-scholar-labs-is-out"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/observation-on-the-industrial-revolution"
+  to = "https://www.danecoleanderson.com/blog/observation-on-the-industrial-revolution"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/where-are-our-ian-flemings"
+  to = "https://www.danecoleanderson.com/blog/where-are-our-ian-flemings"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/when-will-renaissance-historians-learn-to-love-jakob-burckhardt"
+  to = "https://www.danecoleanderson.com/blog/when-will-renaissance-historians-learn-to-love-jakob-burckhardt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/what-was-the-enlightenment"
+  to = "https://www.danecoleanderson.com/blog/what-was-the-enlightenment"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/ai-and-the-art-of-forgetting"
+  to = "https://www.danecoleanderson.com/blog/ai-and-the-art-of-forgetting"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/how-the-romantics-made-history-modern"
+  to = "https://www.danecoleanderson.com/blog/how-the-romantics-made-history-modern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/hollis-robbins-on-how-agi-will-transform-higher-ed"
+  to = "https://www.danecoleanderson.com/blog/hollis-robbins-on-how-agi-will-transform-higher-ed"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/the-elephant-in-your-brain"
+  to = "https://www.danecoleanderson.com/blog/the-elephant-in-your-brain"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/the-fate-of-british-romantic-poets-in-china"
+  to = "https://www.danecoleanderson.com/blog/the-fate-of-british-romantic-poets-in-china"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/is-close-reading-ethically-neutral"
+  to = "https://www.danecoleanderson.com/blog/is-close-reading-ethically-neutral"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/jonathan-sheehan-s-forthcoming-book-on-sacrifice"
+  to = "https://www.danecoleanderson.com/blog/jonathan-sheehan-s-forthcoming-book-on-sacrifice"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/robert-alter-s-god"
+  to = "https://www.danecoleanderson.com/blog/robert-alter-s-god"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/ai-and-dialogic-reading"
+  to = "https://www.danecoleanderson.com/blog/ai-and-dialogic-reading"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/ai-and-the-university-creative-destruction-or-reform"
+  to = "https://www.danecoleanderson.com/blog/ai-and-the-university-creative-destruction-or-reform"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/laughing-at-othello"
+  to = "https://www.danecoleanderson.com/blog/laughing-at-othello"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/review-fredrik-deboer-s-the-cult-of-smart"
+  to = "https://www.danecoleanderson.com/blog/review-fredrik-deboer-s-the-cult-of-smart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/should-falstaff-take-wegovy"
+  to = "https://www.danecoleanderson.com/blog/should-falstaff-take-wegovy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://humanitieslastchance.org/article/should-hamlet-take-prozac"
+  to = "https://www.danecoleanderson.com/blog/should-hamlet-take-prozac"
+  status = 301
+  force = true
+
+# www.humanitieslastchance.org: pages with a clear equivalent
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/about"
+  to = "https://www.danecoleanderson.com/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/contact"
+  to = "https://www.danecoleanderson.com/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/resources"
+  to = "https://www.danecoleanderson.com/courses"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/articles/blog"
+  to = "https://www.danecoleanderson.com/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/articles/interviews"
+  to = "https://www.danecoleanderson.com/interviews"
+  status = 301
+  force = true
+
+# www.humanitieslastchance.org: interviews (same slugs on the new site)
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/jonathan-sheehan-on-sacrifice-and-the-secular"
+  to = "https://www.danecoleanderson.com/article/jonathan-sheehan-on-sacrifice-and-the-secular"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/walter-benn-michaels-on-ai-against-theory-and-the-trouble-with-viewpoint-diversity"
+  to = "https://www.danecoleanderson.com/article/walter-benn-michaels-on-ai-against-theory-and-the-trouble-with-viewpoint-diversity"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/kathleen-fitzpatrick-on-the-digital-humanities-ai-and-thinking-generously"
+  to = "https://www.danecoleanderson.com/article/kathleen-fitzpatrick-on-the-digital-humanities-ai-and-thinking-generously"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/hollis-robbins-on-ai-and-thinking-across-boundaries"
+  to = "https://www.danecoleanderson.com/article/hollis-robbins-on-ai-and-thinking-across-boundaries"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/li-ou-on-skepticism-negative-capability-and-romanticism-in-china"
+  to = "https://www.danecoleanderson.com/article/li-ou-on-skepticism-negative-capability-and-romanticism-in-china"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/stanley-fish-on-interpretive-communities-viewpoint-diversity-and-frank-sinatra"
+  to = "https://www.danecoleanderson.com/article/stanley-fish-on-interpretive-communities-viewpoint-diversity-and-frank-sinatra"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/paul-fry-on-wordsworth-william-empson-and-literary-theory"
+  to = "https://www.danecoleanderson.com/article/paul-fry-on-wordsworth-william-empson-and-literary-theory"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/scott-newstok-on-thinking-like-shakespeare-close-reading-and-montaigne"
+  to = "https://www.danecoleanderson.com/article/scott-newstok-on-thinking-like-shakespeare-close-reading-and-montaigne"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/michael-clune-on-aesthetic-judgment-ai-and-the-future-of-the-english-departments"
+  to = "https://www.danecoleanderson.com/article/michael-clune-on-aesthetic-judgment-ai-and-the-future-of-the-english-departments"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/david-sorensen-on-gentlemanliness-carlyle-and-hero-worship"
+  to = "https://www.danecoleanderson.com/article/david-sorensen-on-gentlemanliness-carlyle-and-hero-worship"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/john-turner-on-joseph-smith-charisma-and-the-history-of-early-mormonism"
+  to = "https://www.danecoleanderson.com/article/john-turner-on-joseph-smith-charisma-and-the-history-of-early-mormonism"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/10-things-i-hate-about-you-and-shakespeare-adaptation-with-natalie-loper"
+  to = "https://www.danecoleanderson.com/article/10-things-i-hate-about-you-and-shakespeare-adaptation-with-natalie-loper"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/mark-edmundson-on-emerson-trump-freud-and-the-super-ego"
+  to = "https://www.danecoleanderson.com/article/mark-edmundson-on-emerson-trump-freud-and-the-super-ego"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/gayle-greene-on-shakespeare-and-the-state-of-the-humanities"
+  to = "https://www.danecoleanderson.com/article/gayle-greene-on-shakespeare-and-the-state-of-the-humanities"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/critical-ai-and-victorian-literature-with-lauren-goodlad"
+  to = "https://www.danecoleanderson.com/article/critical-ai-and-victorian-literature-with-lauren-goodlad"
+  status = 301
+  force = true
+
+# www.humanitieslastchance.org: posts selected for the new blog
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/google-scholar-labs-is-out"
+  to = "https://www.danecoleanderson.com/blog/google-scholar-labs-is-out"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/observation-on-the-industrial-revolution"
+  to = "https://www.danecoleanderson.com/blog/observation-on-the-industrial-revolution"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/where-are-our-ian-flemings"
+  to = "https://www.danecoleanderson.com/blog/where-are-our-ian-flemings"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/when-will-renaissance-historians-learn-to-love-jakob-burckhardt"
+  to = "https://www.danecoleanderson.com/blog/when-will-renaissance-historians-learn-to-love-jakob-burckhardt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/what-was-the-enlightenment"
+  to = "https://www.danecoleanderson.com/blog/what-was-the-enlightenment"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/ai-and-the-art-of-forgetting"
+  to = "https://www.danecoleanderson.com/blog/ai-and-the-art-of-forgetting"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/how-the-romantics-made-history-modern"
+  to = "https://www.danecoleanderson.com/blog/how-the-romantics-made-history-modern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/hollis-robbins-on-how-agi-will-transform-higher-ed"
+  to = "https://www.danecoleanderson.com/blog/hollis-robbins-on-how-agi-will-transform-higher-ed"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/the-elephant-in-your-brain"
+  to = "https://www.danecoleanderson.com/blog/the-elephant-in-your-brain"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/the-fate-of-british-romantic-poets-in-china"
+  to = "https://www.danecoleanderson.com/blog/the-fate-of-british-romantic-poets-in-china"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/is-close-reading-ethically-neutral"
+  to = "https://www.danecoleanderson.com/blog/is-close-reading-ethically-neutral"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/jonathan-sheehan-s-forthcoming-book-on-sacrifice"
+  to = "https://www.danecoleanderson.com/blog/jonathan-sheehan-s-forthcoming-book-on-sacrifice"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/robert-alter-s-god"
+  to = "https://www.danecoleanderson.com/blog/robert-alter-s-god"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/ai-and-dialogic-reading"
+  to = "https://www.danecoleanderson.com/blog/ai-and-dialogic-reading"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/ai-and-the-university-creative-destruction-or-reform"
+  to = "https://www.danecoleanderson.com/blog/ai-and-the-university-creative-destruction-or-reform"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/laughing-at-othello"
+  to = "https://www.danecoleanderson.com/blog/laughing-at-othello"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/review-fredrik-deboer-s-the-cult-of-smart"
+  to = "https://www.danecoleanderson.com/blog/review-fredrik-deboer-s-the-cult-of-smart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/should-falstaff-take-wegovy"
+  to = "https://www.danecoleanderson.com/blog/should-falstaff-take-wegovy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/article/should-hamlet-take-prozac"
+  to = "https://www.danecoleanderson.com/blog/should-hamlet-take-prozac"
+  status = 301
+  force = true
+
+# humanitieslastchance.org: everything else goes to the new homepage
+[[redirects]]
+  from = "https://humanitieslastchance.org/*"
+  to = "https://www.danecoleanderson.com/"
+  status = 301
+  force = true
+
+# www.humanitieslastchance.org: everything else goes to the new homepage
+[[redirects]]
+  from = "https://www.humanitieslastchance.org/*"
+  to = "https://www.danecoleanderson.com/"
   status = 301
   force = true
 

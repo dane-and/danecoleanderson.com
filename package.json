@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run export:interviews && vite",
-    "build": "npm run export:interviews && vite build",
-    "build:dev": "npm run export:interviews && vite build --mode development",
+    "dev": "npm run export:content && vite",
+    "build": "npm run export:content && vite build",
+    "build:dev": "npm run export:content && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "export:interviews": "node scripts/export-interviews.mjs"
+    "export:content": "npm run export:interviews && npm run export:blog",
+    "export:interviews": "node scripts/export-interviews.mjs",
+    "export:blog": "node scripts/export-blog.mjs"
   },
   "dependencies": {
     "@babel/runtime": "^7.26.10",

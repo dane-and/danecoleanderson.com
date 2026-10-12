@@ -25,3 +25,4 @@ dist-ssr
 
 # Public CMS snapshot is generated for every build.
 /public/interviews.json
+/public/blog.json

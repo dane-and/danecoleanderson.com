@@ -23,7 +23,44 @@ const linkedin = 'https://www.linkedin.com/in/danecoleanderson/';
 const siteOrigin = (import.meta.env.VITE_SITE_URL || 'https://www.danecoleanderson.com').replace(/\/$/, '');
 const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const painting = asset('images/st-matthew-ebbo-gospels.jpg');
-const nav = [['/about', 'About'], ['/research', 'Research & Teaching'], ['/interviews', 'Interviews'], ['/courses', 'Favorite Courses']];
+const nav = [['/about', 'About'], ['/research', 'Research & Teaching'], ['/blog', 'Blog'], ['/interviews', 'Interviews'], ['/courses', 'Favorite Courses']];
+type BlogPost = Interview;
+type PortableBlock = { _type?: string; style?: string; children?: { text?: string }[]; asset?: { url?: string; metadata?: { dimensions?: { width?: number; height?: number } } }; alt?: string; caption?: string };
+
+const bodyComponents: React.ComponentProps<typeof PortableText>['components'] = {
+  types: {
+    image: ({ value }: { value: PortableBlock }) => value?.asset?.url ? <figure className="pf-interview-image"><img src={value.asset.url} alt={value.alt || ''} loading="lazy" width={value.asset.metadata?.dimensions?.width} height={value.asset.metadata?.dimensions?.height} />{value.caption && <figcaption>{value.caption}</figcaption>}</figure> : null,
+  },
+  marks: {
+    link: ({ value, children }: { value?: { href?: string }; children?: React.ReactNode }) => {
+      const href = value?.href || '';
+      const external = /^https?:\/\//.test(href) && !href.includes('danecoleanderson.com');
+      return <a href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{children}</a>;
+    },
+  },
+};
+function Body({ body }: { body: Interview['body'] }) {
+  return typeof body === 'string' ? <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(body) }} /> : body ? <PortableText value={body} components={bodyComponents} /> : null;
+}
+// A short preview: the Sanity excerpt when there is one, otherwise the opening of the post.
+function preview(post: BlogPost, limit = 220) {
+  if (post.excerpt?.trim()) return post.excerpt.trim();
+  const text = typeof post.body === 'string'
+    ? sanitizeHtml(post.body, { allowedTags: [], allowedAttributes: {} })
+    : Array.isArray(post.body) ? (post.body as PortableBlock[]).filter(b => b._type === 'block' && (!b.style || b.style === 'normal')).map(b => (b.children || []).map(c => c.text || '').join('')).join(' ') : '';
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= limit) return clean;
+  return `${clean.slice(0, clean.lastIndexOf(' ', limit)).replace(/[,;:.\s]+$/, '')}…`;
+}
+function useBlogPosts() {
+  return useQuery<BlogPost[]>({ queryKey: ['portfolio-blog'], queryFn: async () => {
+    const response = await fetch(asset('blog.json'));
+    if (!response.ok) throw new Error('The blog could not be loaded.');
+    const posts: BlogPost[] = await response.json();
+    if (!Array.isArray(posts)) throw new Error('The blog is invalid.');
+    return posts;
+  } });
+}
 
 function useInterviews() {
   return useQuery<Interview[]>({ queryKey: ['portfolio-interviews'], queryFn: async () => {
@@ -80,12 +117,13 @@ function Home() {
   const selected = ['hollis-robbins-on-ai-and-thinking-across-boundaries', 'stanley-fish-on-interpretive-communities-viewpoint-diversity-and-frank-sinatra', 'michael-clune-on-aesthetic-judgment-ai-and-the-future-of-the-english-departments'].map(slug => data.find(i => i.slug.current === slug)).filter((i): i is Interview => Boolean(i));
   return <>
     <Metadata title="Dane Anderson" description="Dane Anderson is a historian and teacher studying nineteenth-century British intellectual history, with interviews and free courses in the humanities." />
-    <section className="pf-hero"><div className="pf-hero-copy"><h1>Historian and Teacher</h1><p className="pf-hero-description">I’m Dane Anderson, a PhD candidate in English at the University of Michigan. I study nineteenth-century British intellectual history, teach, and talk with scholars about their work.</p><div className="pf-actions"><Link className="pf-button" to="/about">More about me <span aria-hidden="true">↗</span></Link><Link className="pf-text-link" to="/interviews">Explore the interviews <span aria-hidden="true">→</span></Link></div></div>
+    <section className="pf-hero"><div className="pf-hero-copy"><h1>Intellectual History, Teaching, and AI</h1><p className="pf-hero-description">I’m Dane Anderson, a PhD candidate in English at the University of Michigan. I study nineteenth-century British intellectual history, teach, and talk with scholars about their work.</p><div className="pf-actions"><Link className="pf-button" to="/about">More about me <span aria-hidden="true">↗</span></Link><Link className="pf-text-link" to="/interviews">Explore the interviews <span aria-hidden="true">→</span></Link></div></div>
     <figure className="pf-hero-art"><img src={painting} alt="Saint Matthew writing at his desk, from the Ebbo Gospels" width="433" height="599" /><figcaption><em>Saint Matthew</em>, from the <em>Ebbo Gospels</em></figcaption></figure></section>
     <section className="pf-work" aria-labelledby="work-heading"><div className="pf-section-label"><p className="pf-eyebrow">An introduction</p><h2 id="work-heading">My work</h2></div><div className="pf-work-list">
       <Link to="/research"><span className="pf-number">01</span><div><h3>Research & teaching</h3><p>I study nineteenth-century British intellectual culture by examining how writers across disciplines theorized the relationship between subjectivity and objectivity, mind and world.</p></div><span aria-hidden="true">↗</span></Link>
-      <Link to="/interviews"><span className="pf-number">02</span><div><h3>Interviews</h3><p>My series of interviews with leading scholars explores why the liberal arts are important and the best ways to ensure they remain relevant.</p></div><span aria-hidden="true">↗</span></Link>
-      <Link to="/courses"><span className="pf-number">03</span><div><h3>Favorite courses</h3><p>I curated a collection of my favorite free online courses for self-directed learning.</p></div><span aria-hidden="true">↗</span></Link>
+      <Link to="/blog"><span className="pf-number">02</span><div><h3>Blog</h3><p>Short essays on intellectual history, literature, teaching, and AI.</p></div><span aria-hidden="true">↗</span></Link>
+      <Link to="/interviews"><span className="pf-number">03</span><div><h3>Interviews</h3><p>My series of interviews with leading scholars explores why the liberal arts are important and the best ways to ensure they remain relevant.</p></div><span aria-hidden="true">↗</span></Link>
+      <Link to="/courses"><span className="pf-number">04</span><div><h3>Favorite courses</h3><p>I curated a collection of my favorite free online courses for self-directed learning.</p></div><span aria-hidden="true">↗</span></Link>
     </div></section>
     <section className="pf-featured"><div className="pf-section-heading"><div><h2>Check out some of my favorite interviews</h2></div><Link className="pf-text-link" to="/interviews">View the series <span aria-hidden="true">→</span></Link></div>{selected.length > 0 ? <InterviewCards interviews={selected} /> : <p>Conversations about literature, interpretation, AI, and the future of education. <Link to="/interviews">Explore the interview series.</Link></p>}</section>
   </>;
@@ -126,11 +164,27 @@ function InterviewSeries() {
 function InterviewPage() {
   const { slug } = useParams();
   const { data = [], isPending, isError, refetch } = useInterviews();
+  const blog = useBlogPosts();
   const interview = data.find(i => i.slug.current === slug);
-  if (isPending) return <p className="pf-status" role="status">Loading interview…</p>;
+  if (!isPending && !interview && blog.data?.some(p => p.slug.current === slug)) return <Navigate to={`/blog/${slug}`} replace />;
+  if (isPending || (!interview && blog.isPending)) return <p className="pf-status" role="status">Loading interview…</p>;
   if (isError) return <div className="pf-status" role="alert"><p>The interview couldn’t be loaded.</p><button className="pf-button" onClick={() => refetch()}>Retry</button></div>;
   if (!interview) return <Unavailable />;
-  return <div className="pf-reading"><Metadata title={interview.title} description={interview.excerpt || 'An interview by Dane Anderson.'} image={interview.mainImage?.asset?.url} /><Link className="pf-text-link" to="/interviews">← All interviews</Link><p className="pf-eyebrow">Interviews</p><h1>{interview.title}</h1><p className="pf-byline">Interview by Dane Anderson</p>{interview.excerpt && <p className="pf-interview-deck">{interview.excerpt}</p>}{interview.mainImage?.asset?.url && <figure className="pf-interview-image"><img src={interview.mainImage.asset.url} alt={interview.mainImage.alt || interview.title} />{interview.mainImage.caption && <figcaption>{interview.mainImage.caption}</figcaption>}</figure>}<article className="pf-transcript prose max-w-none">{typeof interview.body === 'string' ? <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(interview.body) }} /> : interview.body && <PortableText value={interview.body} />}</article><div className="pf-reading-end"><Link className="pf-text-link" to="/interviews">← Return to the interview series</Link></div></div>;
+  return <div className="pf-reading"><Metadata title={interview.title} description={interview.excerpt || 'An interview by Dane Anderson.'} image={interview.mainImage?.asset?.url} /><Link className="pf-text-link" to="/interviews">← All interviews</Link><p className="pf-eyebrow">Interviews</p><h1>{interview.title}</h1><p className="pf-byline">Interview by Dane Anderson</p>{interview.excerpt && <p className="pf-interview-deck">{interview.excerpt}</p>}{interview.mainImage?.asset?.url && <figure className="pf-interview-image"><img src={interview.mainImage.asset.url} alt={interview.mainImage.alt || interview.title} />{interview.mainImage.caption && <figcaption>{interview.mainImage.caption}</figcaption>}</figure>}<article className="pf-transcript prose max-w-none"><Body body={interview.body} /></article><div className="pf-reading-end"><Link className="pf-text-link" to="/interviews">← Return to the interview series</Link></div></div>;
+}
+function Blog() {
+  const { data = [], isPending, isError, refetch } = useBlogPosts();
+  return <><Metadata title="Blog" description="Essays by Dane Anderson on intellectual history, literature, teaching, and AI." /><Intro eyebrow="Writing" title="Blog"><p>Short essays on intellectual history, literature, teaching, and AI.</p></Intro>
+    {isPending ? <p role="status" className="pf-status">Loading posts…</p> : isError ? <div className="pf-status" role="alert"><p>The blog couldn’t be loaded. Please try again.</p><button className="pf-button" onClick={() => refetch()}>Retry</button></div> : data.length ? <div className="pf-post-list">{data.map(post => { const text = preview(post); return <article className="pf-post" key={post._id}><h2><Link to={`/blog/${post.slug.current}`}>{post.title}</Link></h2>{text && <p>{text}</p>}<Link className="pf-text-link" to={`/blog/${post.slug.current}`} aria-label={`Read “${post.title}”`}>Read the post <span aria-hidden="true">↗</span></Link></article>; })}</div> : <p className="pf-status">No posts yet.</p>}</>;
+}
+function BlogPostPage() {
+  const { slug } = useParams();
+  const { data = [], isPending, isError, refetch } = useBlogPosts();
+  const post = data.find(p => p.slug.current === slug);
+  if (isPending) return <p className="pf-status" role="status">Loading post…</p>;
+  if (isError) return <div className="pf-status" role="alert"><p>The post couldn’t be loaded.</p><button className="pf-button" onClick={() => refetch()}>Retry</button></div>;
+  if (!post) return <Unavailable />;
+  return <div className="pf-reading"><Metadata title={post.title.trim()} description={preview(post, 160) || 'An essay by Dane Anderson.'} image={post.mainImage?.asset?.url} /><Link className="pf-text-link" to="/blog">← All posts</Link><p className="pf-eyebrow">Blog</p><h1>{post.title.trim()}</h1><p className="pf-byline">By Dane Anderson</p>{post.excerpt && <p className="pf-interview-deck">{post.excerpt}</p>}{post.mainImage?.asset?.url && <figure className="pf-interview-image"><img src={post.mainImage.asset.url} alt={post.mainImage.alt || post.title} />{post.mainImage.caption && <figcaption>{post.mainImage.caption}</figcaption>}</figure>}<article className="pf-transcript prose max-w-none"><Body body={post.body} /></article><div className="pf-reading-end"><Link className="pf-text-link" to="/blog">← Return to the blog</Link></div></div>;
 }
 function Courses() {
   const [query, setQuery] = useState('');
@@ -141,12 +195,12 @@ function Contact() {
   return <><Metadata title="Contact" description="Get in touch with Dane Anderson about research, teaching, or his interviews." /><div className="pf-intro"><h1 className="pf-eyebrow">Contact</h1><div className="pf-lead"><p>For questions about my research, teaching, or interviews, you can reach me by email or connect with me on LinkedIn.</p></div></div><div className="pf-contact"><a href={`mailto:${email}`}>{email} <span aria-hidden="true">↗</span></a><a className="pf-contact-link" href={linkedin} target="_blank" rel="noopener noreferrer"><Linkedin size={20} aria-hidden="true" />Connect on LinkedIn <span aria-hidden="true">↗</span></a><p>Based in the Washington, D.C. area.</p></div></>;
 }
 function Unavailable() {
-  return <><Metadata title="Page unavailable" description="This page is no longer available. Explore Dane Anderson’s research, interviews, and favorite courses." noindex /><Intro eyebrow="Page unavailable" title="This page is no longer here."><p>The blog and book reviews have been retired. You can still explore the complete interview series.</p></Intro><Link className="pf-button" to="/interviews">Browse the interviews <span aria-hidden="true">→</span></Link></>;
+  return <><Metadata title="Page unavailable" description="This page is no longer available. Explore Dane Anderson’s research, interviews, and favorite courses." noindex /><Intro eyebrow="Page unavailable" title="This page is no longer here."><p>Some older posts and reviews have been retired. You can still read the blog and explore the complete interview series.</p></Intro><div className="pf-actions"><Link className="pf-button" to="/blog">Read the blog <span aria-hidden="true">→</span></Link><Link className="pf-text-link" to="/interviews">Browse the interviews <span aria-hidden="true">→</span></Link></div></>;
 }
 function LegacySearch() {
   const { search } = useLocation();
   return <Navigate to={`/interviews${search}`} replace />;
 }
 export default function Portfolio() {
-  return <div className="portfolio"><a className="pf-skip" href="#main-content">Skip to content</a><Header /><main id="main-content" className="pf-main"><Routes><Route index element={<Home />} /><Route path="about" element={<About />} /><Route path="research" element={<Research />} /><Route path="interviews" element={<InterviewSeries />} /><Route path="articles/interviews" element={<Navigate to="/interviews" replace />} /><Route path="article/:slug" element={<InterviewPage />} /><Route path="courses" element={<Courses />} /><Route path="resources" element={<Navigate to="/courses" replace />} /><Route path="contact" element={<Contact />} /><Route path="search" element={<LegacySearch />} /><Route path="*" element={<Unavailable />} /></Routes></main><Footer /></div>;
+  return <div className="portfolio"><a className="pf-skip" href="#main-content">Skip to content</a><Header /><main id="main-content" className="pf-main"><Routes><Route index element={<Home />} /><Route path="about" element={<About />} /><Route path="research" element={<Research />} /><Route path="blog" element={<Blog />} /><Route path="blog/:slug" element={<BlogPostPage />} /><Route path="articles/blog" element={<Navigate to="/blog" replace />} /><Route path="interviews" element={<InterviewSeries />} /><Route path="articles/interviews" element={<Navigate to="/interviews" replace />} /><Route path="article/:slug" element={<InterviewPage />} /><Route path="courses" element={<Courses />} /><Route path="resources" element={<Navigate to="/courses" replace />} /><Route path="contact" element={<Contact />} /><Route path="search" element={<LegacySearch />} /><Route path="*" element={<Unavailable />} /></Routes></main><Footer /></div>;
 }

@@ -36,6 +36,14 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'showOnBlog',
+      title: 'Show on danecoleanderson.com blog',
+      type: 'boolean',
+      description:
+        'When on, this published post appears on the Blog page of danecoleanderson.com after the next site build. Posts left off stay here in the archive.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'mainImage',
       title: 'Main image',
       type: 'image',

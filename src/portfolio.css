@@ -17,3 +17,10 @@
 .pf-hero-art figcaption{text-align:center}
 .pf-featured .pf-section-heading h2{font-size:clamp(30px,3vw,38px);line-height:1.2;text-wrap:balance}
 @media(max-width:650px){.pf-hero{grid-template-columns:1fr;gap:32px;padding:36px 0 40px}.pf-hero h1{font-size:36px;max-width:440px}.portfolio .pf-hero-description{font-size:16px!important}.pf-hero-art{width:min(100%,280px)}}
+
+/* Blog: a quiet list in the same rules and type as the rest of the site. */
+.pf-post-list{border-top:1px solid var(--line);max-width:860px}
+.pf-post{display:flex;flex-direction:column;align-items:flex-start;padding:30px 0 28px;border-bottom:1px solid var(--line)}
+.pf-post h2{font-size:28px;line-height:1.25;margin:0 0 12px;max-width:720px}
+.portfolio .pf-post p{font-size:14px;color:var(--muted);max-width:680px;margin:0 0 12px}
+@media(max-width:650px){.pf-post{padding:24px 0 22px}.pf-post h2{font-size:25px}.portfolio .pf-post p{font-size:13px}}
