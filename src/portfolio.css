@@ -27,7 +27,7 @@
 .portfolio .pf-post .pf-date{font-size:10px;letter-spacing:.08em;margin:0 0 8px}
 
 /* About: portrait beside the text on wide screens, above it on phones. */
-.pf-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,270px);gap:64px;max-width:1010px;align-items:start}
+.pf-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,270px);gap:clamp(32px,5vw,64px);max-width:1010px;align-items:start}
 .pf-about .pf-prose{grid-column:1;grid-row:1;max-width:680px}
 .pf-portrait{grid-column:2;grid-row:1;margin:6px 0 0}
 .pf-portrait img{display:block;width:100%;height:auto;border:6px solid #eeece1;outline:1px solid #d9d6c7}
@@ -36,4 +36,4 @@
 .portfolio .pf-cv-links{display:flex;flex-wrap:wrap;gap:22px;margin:4px 0 26px}
 .portfolio .pf-prose .pf-cv-links a{text-decoration:none!important;font-size:14px;display:inline-flex;align-items:baseline;gap:8px;padding-block:7px;border-bottom:1px solid var(--line)}
 .pf-file{font-size:9px;letter-spacing:.12em;color:var(--muted);font-weight:600}
-@media(max-width:650px){.pf-portrait{grid-column:1;grid-row:1;max-width:210px;margin:0}.pf-about .pf-prose{grid-row:2}}
+@media(max-width:650px){.pf-about{grid-template-columns:1fr;gap:28px}.pf-portrait{grid-column:1;grid-row:1;max-width:210px;margin:0}.pf-about .pf-prose{grid-row:2}}
